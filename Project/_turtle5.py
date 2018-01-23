@@ -1,0 +1,46 @@
+import turtle
+
+def draw_cort():
+    window = turtle.Screen()
+    window.bgcolor('#ff0084')
+    t = turtle.Turtle()
+    t.color('#fff')
+    t.shape('turtle')
+    t.speed(5)
+    # Y
+    t.right(45)
+    t.forward(50)
+    t.left(90)
+    t.forward(50)
+    t.penup()
+    t.right(180)
+    t.forward(50)
+    t.left(45)
+    t.pendown()
+    t.forward(100)
+    # H
+    t.penup()
+    t.left(90)
+    t.forward(50)
+    t.left(90)
+    t.forward(140)
+    t.right(180)
+    t.pendown()
+    t.forward(140)
+    t.penup()
+    t.left(180)
+    t.forward(70)
+    t.right(90)
+    t.pendown()
+    t.forward(40)
+    t.penup()
+    t.left(90)
+    t.forward(70)
+    t.pendown()
+    t.right(180)
+    t.forward(140)
+    
+    window.exitonclick()
+
+draw_cort()
+    
