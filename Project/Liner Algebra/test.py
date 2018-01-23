@@ -8,21 +8,19 @@ print('if not "": '+str(not ""))
 print('if not (): '+str(not ()))
 print('if not None: '+str(not None))
 
-vector0 = vector.Vector([-7.579,-7.88])
-vector1 = vector.Vector([22.737,23.64])
+vector0 = vector.Vector([3.039,1.879])
+vector1 = vector.Vector([0.825,2.036])
 
-vector2 = vector.Vector([-2.029,9.97,4.172])
-vector3 = vector.Vector([-9.231,-6.639,-7.245])
+vector2 = vector.Vector([-9.88,-3.264,-8.159])
+vector3 = vector.Vector([-2.155,-9.353,-9.473])
 
-vector4 = vector.Vector([-2.328,-7.284,-1.214])
-vector5 = vector.Vector([-1.821,1.072,-2.94])
+vector4 = vector.Vector([3.009,-6.172,3.692,-2.51])
+vector5 = vector.Vector([6.404,-9.144,2.759,8.718])
 
-vector6 = vector.Vector([2.118,4.827])
-vector7 = vector.Vector([0,0])
 
-print(vector0.getAngleType(vector1))
-print(vector2.getAngleType(vector3))
-print(vector4.getAngleType(vector5))
-print(vector6.getAngleType(vector7))
+print(vector0.getProjection(vector1))
+print(vector2.getBasisOrthogonal(vector3))
+print(vector4.getProjection(vector5))
+print(vector4.getBasisOrthogonal(vector5))
 
 

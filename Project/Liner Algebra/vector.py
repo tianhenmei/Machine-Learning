@@ -5,6 +5,9 @@ import math
 
 TOLERANCE = 1e-10
 class Vector(object):
+    CANNOT_NORMALIZE_ZERO_VECTOR_MSG = 'ValueError'
+    NO_UNIQUE_PARALLEL_COMPONENT_MSG = 'There is no unique parallel component'
+    NO_UNIQUE_ORTHOGONAL_COMPONENT_MSG = 'There is no unique orthogonal component'
     def __init__(self, coordinates):
         try:
             #在python中 None,  False, 空字符串"", 0, 空列表[], 空字典{}, 空元组()都相当于False
@@ -106,5 +109,35 @@ class Vector(object):
             elif abs(mul) < TOLERANCE:
                 return 'orthogonal'
         return 'normal'
+
+    def getProjection(self,v):
+        try:
+            u = v.normalized()
+            weight = self.dot(u)
+            return u * weight
+        except Exception as e:
+            if str(e) == self.CANNOT_NORMALIZE_ZERO_VECTOR_MSG:
+                raise Exception(self.NO_UNIQUE_PARALLEL_COMPONENT_MSG)
+            else:
+                raise e
+
+    def getBasisOrthogonal(self,v):
+        try:
+            p = self.getProjection(v)
+            return self - p
+        except Exception as e:
+            if str(e) == self.CANNOT_NORMALIZE_ZERO_VECTOR_MSG:
+                raise Exception(self.NO_UNIQUE_ORTHOGONAL_COMPONENT_MSG)
+            else:
+                raise e
+
+    def getCrossPruduct(self,v):
+        x1,y1,z1 = self.coordinates
+        x2,y2,z2 = v.coordinates
+        
+        return Vector([
+            
+        ])
+
 
 
