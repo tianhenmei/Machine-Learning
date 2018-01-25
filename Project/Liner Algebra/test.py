@@ -17,10 +17,12 @@ vector3 = vector.Vector([-2.155,-9.353,-9.473])
 vector4 = vector.Vector([3.009,-6.172,3.692,-2.51])
 vector5 = vector.Vector([6.404,-9.144,2.759,8.718])
 
-
-print(vector0.getProjection(vector1))
-print(vector2.getBasisOrthogonal(vector3))
-print(vector4.getProjection(vector5))
-print(vector4.getBasisOrthogonal(vector5))
+x1,y1 = vector0.coordinates
+print(vector0.coordinates+(0,))
+# print(x1,y1)
+# print(vector0.getProjection(vector1))
+# print(vector2.getBasisOrthogonal(vector3))
+# print(vector4.getProjection(vector5))
+# print(vector4.getBasisOrthogonal(vector5))
 
 

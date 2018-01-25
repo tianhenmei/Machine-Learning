@@ -8,6 +8,7 @@ class Vector(object):
     CANNOT_NORMALIZE_ZERO_VECTOR_MSG = 'ValueError'
     NO_UNIQUE_PARALLEL_COMPONENT_MSG = 'There is no unique parallel component'
     NO_UNIQUE_ORTHOGONAL_COMPONENT_MSG = 'There is no unique orthogonal component'
+    ONLY_ONE_DEFINED_IN_TWO_THREE_DIMS_MSG = 'The function only for two or three magnitude vector'
     def __init__(self, coordinates):
         try:
             #在python中 None,  False, 空字符串"", 0, 空列表[], 空字典{}, 空元组()都相当于False
@@ -132,12 +133,28 @@ class Vector(object):
                 raise e
 
     def getCrossPruduct(self,v):
-        x1,y1,z1 = self.coordinates
-        x2,y2,z2 = v.coordinates
-        
-        return Vector([
+        try:
+            if self.magnitude == 2:
+                x1,y1,z1 = self.coordinates+(0,)
+            else:
+                x1,y1,z1 = self.coordinates
+            if v.magnitude == 2:
+                x2,y2,z2= v.coordinates+(0,)
+            else:
+                x2,y2,z2 = v.coordinates
             
-        ])
+            return Vector([
+                 y1 * z2 - y2 * z1,
+                -x1 * z1 - x2 * z1,
+                 x1 * y2 - x2 * y1
+            ])
+        except ValueError as e:
+            msg = str(e)
+            if msg == 'too many values unpack' or msg == 'need more than 1 value unpack':
+                raise Exception(self.ONLY_ONE_DEFINED_IN_TWO_THREE_DIMS_MSG)
+            else:
+                raise e
+
 
 
 
