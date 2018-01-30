@@ -3,6 +3,7 @@ from decimal import Decimal
 import numbers
 import math
 
+num_decimal_places = 3  # 小数点后面保留位数
 TOLERANCE = 1e-10
 class Vector(object):
     CANNOT_NORMALIZE_ZERO_VECTOR_MSG = 'ValueError'
@@ -62,9 +63,13 @@ class Vector(object):
     def __rmul__(self, scalar):  # 右乘
         return self * scalar
 
+    # getMagnitude：获取向量长度
+    # 返回值 数值
     def getMagnitude(self):
         return math.sqrt(sum([x**2 for x in self.coordinates]))
 
+    # normalized：获取向量方向，即单位向量
+    # 返回值 vector
     def normalized(self):
         try:
             scalar = 1 / self.magnitude
@@ -73,14 +78,19 @@ class Vector(object):
             raise Exception('Cannot normalize the zero vector')
 
     # def __matmul__(self, v):  # 内积@
+    # dot：获取向量内积，即两两数对应相乘然后相加
+    # 返回值 数值
     def dot(self, v):  # 内积@
         try:
             return sum(x*y for x,y in zip(self.coordinates,v.coordinates))
         except TypeError:
             return NotImplemented
 
+    # getAngle：获取向量之间的角度 = math.acos(v1 的单位向量与 v2 的单位向量的 内积)
+    # 返回值 数值
     def getAngle(self,v):
-        return math.acos(self.normalized().dot(v.normalized()))
+        vector_cos = self.normalized().dot(v.normalized())
+        return math.acos(round(vector_cos,num_decimal_places))
 
     def getAngleDegree(self,v):
         angle = self.getAngle(v) * 180 / math.pi % 180
@@ -93,11 +103,13 @@ class Vector(object):
                 return 'orthogonal'
         return angle
 
-    def zeroVector(self):
+    def is_zero(self):
         return self.magnitude < TOLERANCE
 
+    # getAngleType：获取向量角度的类型，平行、垂直或普通
+    # 返回值 String
     def getAngleType(self,v):
-        if self.zeroVector() or v.zeroVector():
+        if self.is_zero() or v.is_zero():
             return 'parallel and orthogonal'
         else:
             n1 = self.normalized()
@@ -111,6 +123,8 @@ class Vector(object):
                 return 'orthogonal'
         return 'normal'
 
+    # getProjection：获取向量v在向量self的投影向量
+    # 返回值 Vector
     def getProjection(self,v):
         try:
             u = v.normalized()
@@ -122,6 +136,8 @@ class Vector(object):
             else:
                 raise e
 
+    # getBasisOrthogonal：获取向量v的一段与self垂直的向量
+    # 返回值 Vector
     def getBasisOrthogonal(self,v):
         try:
             p = self.getProjection(v)
@@ -132,6 +148,8 @@ class Vector(object):
             else:
                 raise e
 
+    # getCrossPruduct：获取向量积
+    # 返回值 vector
     def getCrossPruduct(self,v):
         try:
             if self.magnitude == 2:
@@ -145,7 +163,7 @@ class Vector(object):
             
             return Vector([
                  y1 * z2 - y2 * z1,
-                -x1 * z1 - x2 * z1,
+                -x1 * z2 + x2 * z1,
                  x1 * y2 - x2 * y1
             ])
         except ValueError as e:
@@ -154,6 +172,27 @@ class Vector(object):
                 raise Exception(self.ONLY_ONE_DEFINED_IN_TWO_THREE_DIMS_MSG)
             else:
                 raise e
+
+    # getAreaOfParallelogram：获取向量与向量之间形成的四边形面积
+    # 返回值 数值
+    def getAreaOfParallelogram(self,v):
+        v = self.getCrossPruduct(v)
+        return v.magnitude
+
+    # getAreaOfTriangle：获取向量与向量之间形成的三边形面积
+    # 返回值 数值
+    def getAreaOfTriangle(self,v):
+        v = self.getCrossPruduct(v)
+        return v.magnitude / 2
+
+
+
+
+
+
+
+
+
 
 
 
