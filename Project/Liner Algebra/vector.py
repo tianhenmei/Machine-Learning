@@ -31,7 +31,10 @@ class Vector(object):
 
 
     def __eq__(self, v):
-        return self.coordinates == v.coordinates
+        for index in range(self.dimension):
+            if not MyDecimal(self.coordinates[index] - v.coordinates[index]).is_near_zero():
+                return False
+        return True
 
     def __neg__(self):
         return self * -1
@@ -185,7 +188,9 @@ class Vector(object):
         v = self.getCrossPruduct(v)
         return v.magnitude / 2
 
-
+class MyDecimal(Decimal):
+    def is_near_zero(self, eps = 1e-10):
+        return abs(self) < eps
 
 
 

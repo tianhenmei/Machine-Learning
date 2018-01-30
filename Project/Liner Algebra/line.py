@@ -95,9 +95,9 @@ class Line(object):
 		n = self.normal_vector
 		c = v.normal_vector
 		line_type = n.getAngleType(c)
-		if self.basepoint == v.basepoint:
-			return 'equal'
-		elif line_type == 'parallel':
+		if line_type == 'parallel':
+			if self.basepoint == v.basepoint:
+				return 'equal'
 			return 'parallel'
 		else:  #intersection
 			return self.get_crosspoint(v)

@@ -20,7 +20,6 @@ plane3 = plane.Plane([7.715,8.306,5.342],3.76)
 plane4 = plane.Plane([-7.926,8.625,-7.217],-7.952)
 plane5 = plane.Plane([-2.642,2.875,-2.404],2.443)
 
-# print(v0.getAngleType(v1))
 print(plane0.get_relationship(plane1))
 print(plane2.get_relationship(plane3))
 print(plane4.get_relationship(plane5))

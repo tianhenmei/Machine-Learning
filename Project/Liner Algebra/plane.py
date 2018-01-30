@@ -13,13 +13,13 @@ class Plane(object):
         self.dimension = 3
 
         if not normal_vector:
-            all_zeros = ['0']*self.dimension
-            normal_vector = Vector(all_zeros)
-        self.normal_vector = normal_vector
+            all_zeros = [0]*self.dimension
+            normal_vector = all_zeros
+        self.normal_vector = Vector(normal_vector)
 
         if not constant_term:
-            constant_term = Decimal('0')
-        self.constant_term = Decimal(constant_term)
+            constant_term = Decimal(0)
+        self.constant_term = float(Decimal(constant_term))
 
         self.set_basepoint()
 
@@ -28,12 +28,12 @@ class Plane(object):
         try:
             n = self.normal_vector
             c = self.constant_term
-            basepoint_coords = ['0']*self.dimension
+            basepoint_coords = [0]*self.dimension
 
             initial_index = Plane.first_nonzero_index(n)
-            initial_coefficient = n[initial_index]
-
-            basepoint_coords[initial_index] = c/initial_coefficient
+            initial_coefficient = n.coordinates[initial_index]
+            
+            basepoint_coords[initial_index] = c / initial_coefficient
             self.basepoint = Vector(basepoint_coords)
 
         except Exception as e:
@@ -91,10 +91,21 @@ class Plane(object):
 
     @staticmethod
     def first_nonzero_index(iterable):
-        for k, item in enumerate(iterable):
+        for k, item in enumerate(iterable.coordinates):
             if not MyDecimal(item).is_near_zero():
                 return k
         raise Exception(Plane.NO_NONZERO_ELTS_FOUND_MSG)
+
+    def get_relationship(self,v):
+        n = self.normal_vector
+        c = v.normal_vector
+        line_type = n.getAngleType(c)
+        if line_type == 'parallel':
+            if self.basepoint == v.basepoint:
+                return 'equal'
+            return 'parallel'
+        else:
+            return 'intersection'
 
 
 class MyDecimal(Decimal):
