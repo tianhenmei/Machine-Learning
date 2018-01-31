@@ -11,15 +11,16 @@ print('if not "": '+str(not ""))
 print('if not (): '+str(not ()))
 print('if not None: '+str(not None))
 
-plane0 = plane.Plane([-0.412,3.806,0.728],-3.46)
-plane1 = plane.Plane([1.03,-9.515,-1.82],8.65)
+plane0 = plane.Plane([1,-2,1],-1)
+plane1 = plane.Plane([1,0,-2],2)
+plane2 = plane.Plane([-1,4,-4],0)
 
-plane2 = plane.Plane([2.611,5.528,0.283],4.6)
-plane3 = plane.Plane([7.715,8.306,5.342],3.76)
+plane3 = plane.Plane([0,1,-1],2)
+plane4 = plane.Plane([1,-1,1],2)
+plane5 = plane.Plane([3,-4,1],1)
 
-plane4 = plane.Plane([-7.926,8.625,-7.217],-7.952)
-plane5 = plane.Plane([-2.642,2.875,-2.404],2.443)
+plane6 = plane.Plane([1,2,1],-1)
+plane7 = plane.Plane([3,6,2],1)
+plane8 = plane.Plane([-1,-2,-1],1)
 
-print(plane0.get_relationship(plane1))
-print(plane2.get_relationship(plane3))
-print(plane4.get_relationship(plane5))
+
