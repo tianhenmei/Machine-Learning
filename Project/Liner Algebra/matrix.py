@@ -119,6 +119,14 @@ class Matrix(object):
 
 		return Matrix(adjoint).transpose()
 
+	def identity_matrix(self,n):
+		identity = []
+		for i in range(n):
+			temp = [0]*n
+			temp[i] = 1
+			identity.append(temp)
+		return identity
+
 
 
 

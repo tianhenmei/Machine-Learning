@@ -50,5 +50,7 @@ r1 = Matrix([
 ])
 print r1.inverse()
 
+print Matrix([[3]]).inverse()
+
 
 
