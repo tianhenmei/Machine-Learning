@@ -29,10 +29,13 @@ class Vector(object):
     def __str__(self):
         return 'Vector: {}'.format(self.coordinates)
 
+    def __getitem__(self, i):
+        return self.coordinates[i]
+
 
     def __eq__(self, v):
         for index in range(self.dimension):
-            if not MyDecimal(self.coordinates[index] - v.coordinates[index]).is_near_zero():
+            if not MyDecimal(self[index] - v[index]).is_near_zero():
                 return False
         return True
 
@@ -59,7 +62,7 @@ class Vector(object):
 
     def __mul__(self, scalar):  # 乘法
         if isinstance(scalar, numbers.Real):
-            return Vector([x * scalar for x in self.coordinates])
+            return Vector([float(x * scalar) for x in self.coordinates])
         else:
             return NotImplemented
 

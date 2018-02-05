@@ -9,16 +9,24 @@ class Plane(object):
 
     NO_NONZERO_ELTS_FOUND_MSG = 'No nonzero elements found'
 
-    def __init__(self, normal_vector=None, constant_term=None):
-        self.dimension = 3
-
+    def __init__(self, dimension = None, normal_vector=None, constant_term=None):
+        status = False
+        if not normal_vector and not constant_term:
+            raise Exception('Please make sure you have vecotr or constant')
         if not normal_vector:
-            all_zeros = [0]*self.dimension
+            self.dimension = dimension
+            all_zeros = [0] * self.dimension
             normal_vector = all_zeros
+        else:
+            status = True
+
         if not isinstance(normal_vector, Vector):
             self.normal_vector = Vector(normal_vector)
         else:
             self.normal_vector = normal_vector
+            
+        if status:
+            self.dimension = self.normal_vector.dimension
 
         if not constant_term:
             constant_term = Decimal(0)
