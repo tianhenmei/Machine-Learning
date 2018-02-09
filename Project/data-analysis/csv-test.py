@@ -53,8 +53,9 @@ def parse_daily(data_list):
 		one['num_courses_visited'] = parse_int(one['num_courses_visited'])
 		one['total_minutes_visited'] = parse_float(one['total_minutes_visited'])
 		one['projects_completed'] = parse_int(one['projects_completed'])
-		one['acct'] = parse_int(one['acct'])
+		one['account_key'] = parse_int(one['acct'])
 		one['utc_date'] = parse_date(one['utc_date'])
+		del one['acct']
 	return data_list
 
 def parse_project(data_list):
@@ -77,6 +78,43 @@ print enrollments[0]
 print daily_engagement[0]
 print project_submissions[0]
 
+unique_enrollments = set()
+for i in enrollments:
+	unique_enrollments.add(i['account_key'])
 
+unique_engagement = set()
+for i in daily_engagement:
+	unique_engagement.add(i['account_key'])
 
+unique_project_submissions = set()
+for i in project_submissions:
+	unique_project_submissions.add(i['account_key'])
+
+print len(enrollments) , len(unique_enrollments)
+print len(daily_engagement) , len(unique_engagement)
+print len(project_submissions) , len(unique_project_submissions)
+
+count = 0
+for i in enrollments:
+	if i['account_key'] not in unique_engagement and i['join_date'] != i['cancel_date']:
+		count += 1
+
+print 'Exception Data: {}'.format(count)
+
+udacity_data = set()
+for i in enrollments:
+	if i['is_udacity']:
+		udacity_data.add(i['account_key'])
+
+def remove_udacity_data(data_list):
+	not_udacity_data = []
+	for i in data_list:
+		if i not in udacity_data:
+			not_udacity_data.append(i)
+
+	return not_udacity_data
+
+print len(remove_udacity_data(unique_enrollments))
+print len(remove_udacity_data(unique_engagement))
+print len(remove_udacity_data(unique_project_submissions))
 
