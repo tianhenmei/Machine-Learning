@@ -109,12 +109,37 @@ for i in enrollments:
 def remove_udacity_data(data_list):
 	not_udacity_data = []
 	for i in data_list:
-		if i not in udacity_data:
+		if i['account_key'] not in udacity_data:
 			not_udacity_data.append(i)
 
 	return not_udacity_data
 
-print len(remove_udacity_data(unique_enrollments))
-print len(remove_udacity_data(unique_engagement))
-print len(remove_udacity_data(unique_project_submissions))
+non_udacity_enrollments = remove_udacity_data(enrollments)
+non_udacity_engagement = remove_udacity_data(daily_engagement)
+non_udacity_submissions = remove_udacity_data(project_submissions)
+
+print len(non_udacity_enrollments)
+print len(non_udacity_engagement)
+print len(non_udacity_submissions)
+
+paid_students = set()
+paid_enrollments = []
+for i in non_udacity_enrollments:
+	if not i['is_canceled'] or i['days_to_cancel'] > 7:
+		paid_students.add(i['account_key'])
+		paid_enrollments.append(i)
+
+print 'Paid students: {}'.format(len(paid_students))
+
+def within_one_week(data):
+	if data['join_date']
+
+
+
+
+
+
+
+
+
 
