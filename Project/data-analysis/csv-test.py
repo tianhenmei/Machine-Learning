@@ -145,6 +145,24 @@ paid_submissions = remove_free_trail_cancels(non_udacity_project_submissions)
 
 
 paid_engagment_in_first_week = set()
+non_udacity_submissions = remove_udacity_data(project_submissions)
+
+print len(non_udacity_enrollments)
+print len(non_udacity_engagement)
+print len(non_udacity_submissions)
+
+paid_students = set()
+paid_enrollments = []
+for i in non_udacity_enrollments:
+	if not i['is_canceled'] or i['days_to_cancel'] > 7:
+		paid_students.add(i['account_key'])
+		paid_enrollments.append(i)
+
+print 'Paid students: {}'.format(len(paid_students))
+
+def within_one_week(data):
+	if data['join_date']:
+		pass
 
 
 
