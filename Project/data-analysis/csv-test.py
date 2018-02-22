@@ -98,6 +98,7 @@ count = 0
 for i in enrollments:
 	if i['account_key'] not in unique_engagement and i['join_date'] != i['cancel_date']:
 		count += 1
+		print i
 
 print 'Exception Data: {}'.format(count)
 
@@ -109,12 +110,47 @@ for i in enrollments:
 def remove_udacity_data(data_list):
 	not_udacity_data = []
 	for i in data_list:
-		if i not in udacity_data:
+		if i['account_key'] not in udacity_data:
 			not_udacity_data.append(i)
 
 	return not_udacity_data
 
-print len(remove_udacity_data(unique_enrollments))
-print len(remove_udacity_data(unique_engagement))
-print len(remove_udacity_data(unique_project_submissions))
+non_udacity_enrollments = remove_udacity_data(enrollments)
+non_udacity_engagement = remove_udacity_data(daily_engagement)
+non_udacity_project_submissions = remove_udacity_data(project_submissions)
+
+print len(non_udacity_enrollments)
+print len(non_udacity_engagement)
+print len(non_udacity_project_submissions)
+
+
+paid_students = set()
+for i in non_udacity_enrollments:
+	if not i['is_canceled'] or i['days_to_cancel'] > 7:
+		paid_students.add(i['account_key'])
+
+print 'Paid Students: {}'.format(len(paid_students))
+
+def remove_free_trail_cancels(data_list):
+	new_data = []
+	for i in data_list:
+		if i['account_key'] in paid_students:
+			new_data.append(i)
+
+	return new_data
+
+paid_enrollments = remove_free_trail_cancels(non_udacity_enrollments)
+paid_engagement = remove_free_trail_cancels(non_udacity_engagement)
+paid_submissions = remove_free_trail_cancels(non_udacity_project_submissions)
+
+
+paid_engagment_in_first_week = set()
+
+
+
+
+
+
+
+
 
